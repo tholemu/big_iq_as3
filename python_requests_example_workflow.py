@@ -26,16 +26,35 @@ r_stats = requests.get(endpoint + uri_device_stats, headers=headers, verify=Fals
 for stat in r_stats.json()["entries"]:
     print(f"{stat}: {r_stats.json()['entries'][stat]}")
 
-with open("west-app-22.json") as file:
-    declaration = file.read()
-    declaration = json.loads(declaration)
+input("Press enter to deploy Juice Shop to BIG-IP 02A the declaration")
 
-r_as3_declare = requests.post(endpoint + uri_as3_declare, data=json.dumps(declaration), headers=headers, verify=False)
+# with open("west-app-22.json") as file:
+with open("juice-shop/juice-shop_02a.json") as file:
+    juice_shop_02a = file.read()
+    juice_shop_02a = json.loads(juice_shop_02a)
 
-input("press enter to delete the declaration")
+r_as3_declare = requests.post(endpoint + uri_as3_declare, data=json.dumps(juice_shop_02a), headers=headers, verify=False)
 
-with open("west-app-22-delete.json") as file:
-    declaration = file.read()
-    declaration = json.loads(declaration)
+input("Press enter to deploy Juice Shop to BIG-IP 02A")
 
-r_as3_declare = requests.post(endpoint + uri_as3_declare, data=json.dumps(declaration), headers=headers, verify=False)
+with open("juice-shop/juice-shop_02b.json") as file:
+    juice_shop_02b = file.read()
+    juice_shop_02b = json.loads(juice_shop_02b)
+
+r_as3_declare = requests.post(endpoint + uri_as3_declare, data=json.dumps(juice_shop_02b), headers=headers, verify=False)
+
+input("Press enter to delete Juice Shop from BIG-IP 02A")
+
+with open("juice-shop/juice_shop_delete_02a.json") as file:
+    juice_shop_delete_02a = file.read()
+    juice_shop_delete_02a = json.loads(juice_shop_delete_02a)
+
+r_as3_declare = requests.post(endpoint + uri_as3_declare, data=json.dumps(juice_shop_delete_02a), headers=headers, verify=False)
+
+input("Press enter to delete Juice Shop from BIG-IP 02B")
+
+with open("juice-shop/juice_shop_delete_02b.json") as file:
+    juice_shop_delete_02b = file.read()
+    juice_shop_delete_02b = json.loads(juice_shop_delete_02a)
+
+r_as3_declare = requests.post(endpoint + uri_as3_declare, data=json.dumps(juice_shop_delete_02b), headers=headers, verify=False)
