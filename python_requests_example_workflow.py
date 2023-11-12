@@ -46,7 +46,7 @@ r_as3_declare = requests.post(endpoint + uri_as3_declare, data=json.dumps(juice_
 
 input("Press enter to delete Juice Shop from BIG-IP 02A")
 
-with open("juice-shop/juice_shop_delete_02a.json") as file:
+with open("juice-shop/juice-shop_delete_02a.json") as file:
     juice_shop_delete_02a = file.read()
     juice_shop_delete_02a = json.loads(juice_shop_delete_02a)
 
@@ -54,7 +54,7 @@ r_as3_declare = requests.post(endpoint + uri_as3_declare, data=json.dumps(juice_
 
 input("Press enter to delete Juice Shop from BIG-IP 02B")
 
-with open("juice-shop/juice_shop_delete_02b.json") as file:
+with open("juice-shop/juice-shop_delete_02b.json") as file:
     juice_shop_delete_02b = file.read()
     juice_shop_delete_02b = json.loads(juice_shop_delete_02a)
 
