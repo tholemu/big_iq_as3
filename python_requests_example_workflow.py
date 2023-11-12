@@ -58,6 +58,6 @@ input("Press enter to delete Juice Shop from BIG-IP 02B")
 
 with open("juice-shop/juice-shop_delete_02b.json") as file:
     juice_shop_delete_02b = file.read()
-    juice_shop_delete_02b = json.loads(juice_shop_delete_02a)
+    juice_shop_delete_02b = json.loads(juice_shop_delete_02b)
 
 r_as3_declare = requests.post(endpoint + uri_as3_declare, data=json.dumps(juice_shop_delete_02b), headers=headers, verify=False)
