@@ -36,7 +36,7 @@ with open("juice-shop/juice-shop_02a.json") as file:
 
 r_as3_declare = requests.post(endpoint + uri_as3_declare, data=json.dumps(juice_shop_02a), headers=headers, verify=False)
 
-input("Press enter to deploy Juice Shop to BIG-IP 02A")
+input("Press enter to deploy Juice Shop to BIG-IP 02B")
 
 with open("juice-shop/juice-shop_02b.json") as file:
     juice_shop_02b = file.read()
