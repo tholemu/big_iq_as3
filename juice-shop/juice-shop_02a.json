@@ -20,7 +20,7 @@
                     "virtualAddresses": [
                         "10.1.10.200"
                     ],
-                    "pool": "web_pool"
+                    "pool": "juice-shop-pool"
                 },
                 "juice-shop-pool": {
                     "class": "Pool",
