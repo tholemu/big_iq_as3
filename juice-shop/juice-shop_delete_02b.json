@@ -9,7 +9,7 @@
         "label": "Sample 1",
         "remark": "Juice Shop",
         "target": {
-            "address": "10.1.1.15"
+            "address": "10.1.1.16"
         },
         "juice-shop": {
             "class": "Tenant"
