@@ -17,6 +17,7 @@ uri_as3_declare = "mgmt/shared/appsvcs/declare"
 auth_data = {"username":username, "password":password, "loginProviderName":"tmos"}
 
 r_auth = requests.post(endpoint + uri_auth, data=json.dumps(auth_data), verify=False)
+print(f"r_auth: {r_auth.json()}")
 auth_token = r_auth.json()["token"]["token"]
 
 headers = {"X-F5-Auth-Token": auth_token}
