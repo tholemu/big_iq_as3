@@ -34,7 +34,8 @@ with open("juice-shop/juice-shop_02a.json") as file:
     juice_shop_02a = file.read()
     juice_shop_02a = json.loads(juice_shop_02a)
 
-r_as3_declare = requests.post(endpoint + uri_as3_declare, data=json.dumps(juice_shop_02a), headers=headers, verify=False)
+r_juice_shop_02a = requests.post(endpoint + uri_as3_declare, data=json.dumps(juice_shop_02a), headers=headers, verify=False)
+print(f"r_juice_shop_02: {r_juice_shop_02a.json()}")
 
 input("Press enter to deploy Juice Shop to BIG-IP 02B")
 
@@ -42,7 +43,8 @@ with open("juice-shop/juice-shop_02b.json") as file:
     juice_shop_02b = file.read()
     juice_shop_02b = json.loads(juice_shop_02b)
 
-r_as3_declare = requests.post(endpoint + uri_as3_declare, data=json.dumps(juice_shop_02b), headers=headers, verify=False)
+r_juice_shop_02b = requests.post(endpoint + uri_as3_declare, data=json.dumps(juice_shop_02b), headers=headers, verify=False)
+print(f"r_juice_shop_02: {r_juice_shop_02b.json()}")
 
 input("Press enter to delete Juice Shop from BIG-IP 02A")
 
