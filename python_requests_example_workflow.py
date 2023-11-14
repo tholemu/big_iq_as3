@@ -17,26 +17,26 @@ uri_config_sets     = "/mgmt/cm/global/config-sets/"
 uri_merge_move      = "/mgmt/cm/global/global-apps-merge-move"
 auth_data           = {"username":username, "password":password, "loginProviderName":"tmos"}
 
-###
+### Authorization
 
 r_auth = requests.post("https://" + endpoint + uri_auth,
                        data=json.dumps(auth_data), verify=False)
 auth_token = r_auth.json()["token"]["token"]
 headers = {"X-F5-Auth-Token": auth_token}
 
-###
+### Stats Collection
 
-r_stats = requests.get("https://" + endpoint + uri_device_stats,
-                       headers=headers, verify=False)
+# r_stats = requests.get("https://" + endpoint + uri_device_stats,
+#                        headers=headers, verify=False)
 
-for stat in r_stats.json()["entries"]:
-    print(f"{stat}: {r_stats.json()['entries'][stat]}")
+# for stat in r_stats.json()["entries"]:
+#     print(f"{stat}: {r_stats.json()['entries'][stat]}")
 
 ###
 
 input("Press enter to deploy Juice Shop")
 
-###
+### Deploy Juice Shop to BIG-IP instance 02a
 
 with open("juice-shop/juice-shop_02a.json") as file:
     juice_shop_02a = file.read()
@@ -59,7 +59,7 @@ r_juice_shop_02a = requests.post("https://" + endpoint + uri_as3_declare,
                                  data=json.dumps(juice_shop_02a), headers=headers, verify=False)
 print(f"r_juice_shop_02a: {r_juice_shop_02a.json()}")
 
-###
+### Deploy Juice Shop to BIG-IP instance 02b
 
 with open("juice-shop/juice-shop_02b.json") as file:
     juice_shop_02b = file.read()
@@ -69,9 +69,8 @@ r_juice_shop_02b = requests.post("https://" + endpoint + uri_as3_declare,
                                  data=json.dumps(juice_shop_02b), headers=headers, verify=False)
 print(f"r_juice_shop_02b: {r_juice_shop_02b.json()}")
 
-###
+### Get the app config set
 
-# Get the app config set
 uri_config_set_query = f"?$filter=configSetName eq '{config_set_name}'"
 config_sets = requests.get("https://" + endpoint + uri_config_sets + uri_config_set_query,
                            headers=headers, verify=False)
@@ -89,7 +88,7 @@ r_juice_shop_move = requests.post("https://" + endpoint + uri_merge_move,
 
 input("Press enter to delete Juice Shop from BIG-IP 02A")
 
-###
+### Delete Juice Shop from BIG-IP instance 02a
 
 with open("juice-shop/juice-shop_delete_02a.json") as file:
     juice_shop_delete_02a = file.read()
@@ -103,7 +102,7 @@ print(f"r_juice_shop_02a: {r_juice_shop_delete_02a.json()}")
 
 input("Press enter to delete Juice Shop from BIG-IP 02B")
 
-###
+### Delete Juice Shop from BIG-IP instance 02b
 
 with open("juice-shop/juice-shop_delete_02b.json") as file:
     juice_shop_delete_02b = file.read()
