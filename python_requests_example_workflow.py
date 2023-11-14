@@ -95,6 +95,7 @@ app_move_content["componentAppReferencesToMove"] = [{"link": config_set_self_lin
 app_move_content["targetGlobalAppName"] = global_app_name
 app_move_content["deleteEmptyGlobalAppsWhenDone"] = False
 app_move_content["requireNewGlobalApp"] = True
+print(f"app_move_content: {app_move_content}")
 r_juice_shop_move = requests.post("https://" + endpoint + uri_merge_move,
                                   data=json.dumps(app_move_content), headers=headers, verify=False)
 
