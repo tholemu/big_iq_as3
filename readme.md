@@ -8,7 +8,7 @@ USERNAME=svcapi
 PASSWORD=svcAPI!
 ```
 
-You may also need to install the dotenv library.
+You may also need to install the `dotenv` library, which is used to store environment variable values outside of the script.
 
 ```
 pip install python-dotenv
