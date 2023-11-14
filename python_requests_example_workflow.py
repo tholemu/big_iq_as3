@@ -14,6 +14,7 @@ password = os.getenv("PASSWORD")
 uri_auth = "mgmt/shared/authn/login"
 uri_device_stats = "mgmt/shared/diagnostics/device-stats"
 uri_as3_declare = "mgmt/shared/appsvcs/declare"
+uri_merge_move = "mgmt/cm/global/global-apps-merge-move"
 auth_data = {"username":username, "password":password, "loginProviderName":"tmos"}
 
 r_auth = requests.post(endpoint + uri_auth, data=json.dumps(auth_data), verify=False)
