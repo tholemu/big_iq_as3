@@ -114,3 +114,8 @@ r_juice_shop_delete_02b = requests.post("https://" + endpoint + uri_as3_declare,
 print(f"r_juice_shop_02b: {r_juice_shop_delete_02b.json()}")
 
 ###
+
+### Testing
+
+# for i in range(0,100):
+#     r = requests.post("http://10.1.10.200", data=json.dumps(juice_shop_02a))
