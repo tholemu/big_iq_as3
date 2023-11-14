@@ -16,7 +16,7 @@ uri_device_stats    = "/mgmt/shared/diagnostics/device-stats"
 uri_as3_declare     = "/mgmt/shared/appsvcs/declare"
 uri_config_sets     = "/mgmt/cm/global/config-sets/"
 uri_merge_move      = "/mgmt/cm/global/global-apps-merge-move"
-auth_data           = {"username":username, "password":password, "loginProviderName":"tmos"}
+auth_data           = {"username":username,"password":password,"loginProviderName":"tmos"}
 
 ### Authorization
 
@@ -45,17 +45,29 @@ with open("juice-shop/juice-shop_02a.json") as file:
 
 # Get the configSetName value from the AS3 declaration
 # Format: {tenant_name}_{application_name}
+#
+# The declaration object has a number of keys we know
+# will always exist, and one key which is the dynamic
+# name for the tenant. The pre-existing keys are populated
+# within the declaration_exemptions list. Iterating over the
+# declaration object and looking for a key which does not
+# match anything in declaration_exemptions will provide us
+# with the dynamic tenant name.
 declaration_exemptions = ["class","schemaVersion","id","label","remark","target"]
 for key in juice_shop_02a["declaration"]:
     if key not in declaration_exemptions:
         tenant_name = key
 
+# We then do something similar within the tenant object,
+# but it should only have two keys: 'class' and the
+# application object, whose key value is the application name.
 for key in juice_shop_02a["declaration"][tenant_name]:
     if key != "class":
         application_name = key
 
 config_set_name = f"{tenant_name}_{application_name}"
 
+# Make the POST request to deploy the AS3 declaration to instance 02a
 r_juice_shop_02a = requests.post("https://" + endpoint + uri_as3_declare,
                                  data=json.dumps(juice_shop_02a), headers=headers, verify=False)
 print(f"r_juice_shop_02a: {r_juice_shop_02a.json()}")
