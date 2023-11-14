@@ -120,7 +120,7 @@ print(f"r_juice_shop_02b: {r_juice_shop_delete_02b.json()}")
 # big_data = ""
 # for i in range(0,20):
 #     big_data += juice_shop_02a
-# for i in range(0,10):
+# for i in range(0,100):
 #     r = requests.post("http://10.1.10.200", data=json.dumps(big_data))
 
 # to watch traffic on the BIG-IP: tcpdump -X -nni 0.0 host 10.1.10.200
