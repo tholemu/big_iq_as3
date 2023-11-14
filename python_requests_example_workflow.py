@@ -10,6 +10,7 @@ load_dotenv()
 endpoint            = os.getenv("ENDPOINT")
 username            = os.getenv("USERNAME")
 password            = os.getenv("PASSWORD")
+global_app_name     = "Juice_Shop"
 uri_auth            = "/mgmt/shared/authn/login"
 uri_device_stats    = "/mgmt/shared/diagnostics/device-stats"
 uri_as3_declare     = "/mgmt/shared/appsvcs/declare"
@@ -78,7 +79,7 @@ if len(config_sets.json()["items"]) > 0:
     config_set_self_link = config_sets.json()["items"][0]["selfLink"]
 app_move_content = {}
 app_move_content["componentAppReferencesToMove"] = [{"link": config_set_self_link}]
-app_move_content["targetGlobalAppName"] = "Juice_Shop"
+app_move_content["targetGlobalAppName"] = global_app_name
 app_move_content["deleteEmptyGlobalAppsWhenDone"] = False
 app_move_content["requireNewGlobalApp"] = True
 r_juice_shop_move = requests.post("https://" + endpoint + uri_merge_move,
