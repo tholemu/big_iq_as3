@@ -3,7 +3,7 @@
 Create a file named `.env` with contents similar to the following:
 
 ```
-ENDPOINT=474b401e-ae39-4b9f-bb22-ad3d2d6df47e.access.udf.f5.com
+ENDPOINT=10.1.1.13
 USERNAME=svcapi
 PASSWORD=svcAPI!
 ```
