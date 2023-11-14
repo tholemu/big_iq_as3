@@ -74,7 +74,7 @@ print(f"r_juice_shop_02b: {r_juice_shop_02b.json()}")
 uri_config_set_query = f"?$filter=configSetName eq '{config_set_name}'"
 config_sets = requests.get("https://" + endpoint + uri_config_sets + uri_config_set_query,
                            headers=headers, verify=False)
-if config_sets.json()["items"] > 0:
+if len(config_sets.json()["items"]) > 0:
     config_set_self_link = config_sets.json()["items"][0]["selfLink"]
 app_move_content = {}
 app_move_content["componentAppReferencesToMove"] = [{"link": config_set_self_link}]
