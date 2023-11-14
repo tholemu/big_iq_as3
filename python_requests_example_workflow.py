@@ -44,7 +44,6 @@ with open("juice-shop/juice-shop_02a.json") as file:
     juice_shop_02a = json.loads(juice_shop_02a)
 
 # Get the configSetName value from the AS3 declaration
-# Format: {tenant_name}_{application_name}
 #
 # The declaration object has a number of keys we know
 # will always exist, and one key which is the dynamic
@@ -65,6 +64,8 @@ for key in juice_shop_02a["declaration"][tenant_name]:
     if key != "class":
         application_name = key
 
+# Set the configSetName
+# Format: {tenant_name}_{application_name}
 config_set_name = f"{tenant_name}_{application_name}"
 
 # Make the POST request to deploy the AS3 declaration to instance 02a
