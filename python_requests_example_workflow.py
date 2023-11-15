@@ -108,10 +108,10 @@ def post_declaration(declaration):
     status_code, r = api_call(endpoint=endpoint, method="post", uri=uri_as3_declare, access_token="",
                              data=declaration)
     
-    print(f"r_declaration: {r}")
+    print(f"status_code: {status_code}")
 
     if status_code != 200:
-        return True, r["id"]
+        return True, r["declaration"]["id"]
     else:
         return False, r
 
