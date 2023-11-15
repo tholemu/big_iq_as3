@@ -205,7 +205,7 @@ def main():
     config_set_name = get_config_set_name(juice_shop_02a_dec)
     print(f"config_set_name: {config_set_name}\n")
 
-    print("Generating app move content\n")
+    print("Generating app move content")
     app_move_content = get_config_sets(config_set_name)
 
     print("Moving Juice Shop to dedicated application space\n")
