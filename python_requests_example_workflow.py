@@ -174,10 +174,11 @@ def move_application(app_move_content):
 
 def get_global_app_id():
     status_code, global_apps = api_call(endpoint=endpoint, method="get", uri="//mgmt/cm/global/global-apps", access_token="")
-    print(f"global_apps: {global_apps}")
+    
     for item in global_apps["items"]:
         if item["name"] == global_app_name:
             global_app_id = item["id"]
+    
     print(f"global_app_id: {global_app_id}")
     return global_app_id
 
