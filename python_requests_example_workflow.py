@@ -174,12 +174,12 @@ def main():
 
     input("Press enter to deploy Juice Shop\n")
 
-    print("Loading Juice Shop 02a declaration")
+    print("Loading Juice Shop 02a deployment declaration")
     juice_shop_02a_dec = load_declaration("juice-shop/juice-shop_02a.json")
     print("Loading Juice Shop 02b declaration\n")
     juice_shop_02b_dec = load_declaration("juice-shop/juice-shop_02b.json")
 
-    print("Deploying Juice Shop 02a declaration")
+    print("Deploying Juice Shop 02a deployment declaration")
     juice_shop_02a_created, juice_shop_02a = post_declaration(juice_shop_02a_dec)
     print(f"juice_shop_02a_created: {juice_shop_02a_created}\n")
     print("Deploying Juice Shop 02b declaration")
