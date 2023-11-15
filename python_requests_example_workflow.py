@@ -30,6 +30,7 @@ uri_device_stats    = "/mgmt/shared/diagnostics/device-stats"
 uri_as3_declare     = "/mgmt/shared/appsvcs/declare"
 uri_config_sets     = "/mgmt/cm/global/config-sets/"
 uri_merge_move      = "/mgmt/cm/global/global-apps-merge-move"
+uri_global_apps     = "/mgmt/cm/global/global-apps/"
 auth_data           = {"username":username,"password":password,"loginProviderName":"tmos"}
 
 ### Load AS3 declaration from file
@@ -167,8 +168,22 @@ def get_config_set_name(declaration):
 def move_application(app_move_content):
     # r_juice_shop_move = requests.post("https://" + endpoint + uri_merge_move,
     #                                 data=json.dumps(app_move_content), headers=headers, verify=False)
-    status_code, r_juice_shop_move = api_call(endpoint=endpoint, method="post", uri=uri_merge_move, access_token="", data=app_move_content)
+    status_code, r = api_call(endpoint=endpoint, method="post", uri=uri_merge_move, access_token="", data=app_move_content)
 
+
+def get_global_app_id():
+    status_code, r = api_call(endpoint=endpoint, method="get", uri="//mgmt/cm/global/global-apps", access_token="")
+    
+    for item in r["items"]:
+        if item["name"] == global_app_name:
+            global_app_id = item["id"]
+    
+    print(f"global_app_id: {global_app_id}")
+    return global_app_id
+
+def delete_global_app(id):
+    # DELETE https://c702a32c-19d2-4377-b85b-7cb88d2eb982.access.udf.f5.com/mgmt/cm/global/global-apps/0a09942c-b9c1-3690-b89c-7fe7c34f7722
+    status_code, r = api_call(endpoint=endpoint, method="delete", uri=uri_global_apps + id, access_token="")
 
 def main():
 
@@ -176,15 +191,15 @@ def main():
 
     print("Loading Juice Shop 02a deployment declaration")
     juice_shop_02a_dec = load_declaration("juice-shop/juice-shop_02a.json")
-    print("Loading Juice Shop 02b declaration\n")
-    juice_shop_02b_dec = load_declaration("juice-shop/juice-shop_02b.json")
+    # print("Loading Juice Shop 02b declaration\n")
+    # juice_shop_02b_dec = load_declaration("juice-shop/juice-shop_02b.json")
 
     print("Deploying Juice Shop 02a deployment declaration")
     juice_shop_02a_created, juice_shop_02a = post_declaration(juice_shop_02a_dec)
     print(f"juice_shop_02a_created: {juice_shop_02a_created}\n")
-    print("Deploying Juice Shop 02b declaration")
-    juice_shop_02b_created, juice_shop_02b = post_declaration(juice_shop_02b_dec)
-    print(f"juice_shop_02b_created: {juice_shop_02b_created}\n")
+    # print("Deploying Juice Shop 02b declaration")
+    # juice_shop_02b_created, juice_shop_02b = post_declaration(juice_shop_02b_dec)
+    # print(f"juice_shop_02b_created: {juice_shop_02b_created}\n")
 
     print("Getting configSetName")
     config_set_name = get_config_set_name(juice_shop_02a_dec)
@@ -200,15 +215,22 @@ def main():
 
     print("Loading Juice Shop 02a deletion declaration")
     juice_shop_02a_delete_dec = load_declaration("juice-shop/juice-shop_delete_02a.json")
-    print("Loading Juice Shop 02b deletion declaration\n")
-    juice_shop_02b_delete_dec = load_declaration("juice-shop/juice-shop_delete_02b.json")
+    # print("Loading Juice Shop 02b deletion declaration\n")
+    # juice_shop_02b_delete_dec = load_declaration("juice-shop/juice-shop_delete_02b.json")
 
     print("Deleting Juice Shop 02a")
     juice_shop_02a_deleted, juice_shop_02a_delete = post_declaration(juice_shop_02a_delete_dec)
     print(f"juice_shop_02a_deleted: {juice_shop_02a_deleted}\n")
 
-    print("Deleting Juice Shop 02b")
-    juice_shop_02b_deleted, juice_shop_02b_delete = post_declaration(juice_shop_02b_delete_dec)
-    print(f"juice_shop_02b_deleted: {juice_shop_02b_deleted}\n")
+    # print("Deleting Juice Shop 02b")
+    # juice_shop_02b_deleted, juice_shop_02b_delete = post_declaration(juice_shop_02b_delete_dec)
+    # print(f"juice_shop_02b_deleted: {juice_shop_02b_deleted}\n")
+
+    print("Getting global app ID")
+    global_app_id = get_global_app_id()
+
+    print(f"Deleting global app '{global_app_name}")
+    delete_global_app(global_app_id)
+
 
 main()
