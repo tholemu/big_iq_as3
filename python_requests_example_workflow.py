@@ -96,7 +96,7 @@ def api_call(endpoint, method, uri, access_token, data=None):
         elif method == "delete":
             response = requests.delete(f"https://{endpoint}{uri}", headers=headers, verify=False)
 
-        print(f"response.json(): {response.json()}")
+        # print(f"response.json(): {response.json()}")
         return response.status_code, response.json()
     else:
         return 400, f"Invalid method '{method}'"
@@ -107,7 +107,7 @@ def post_declaration(declaration):
     status_code, r = api_call(endpoint=endpoint, method="post", uri=uri_as3_declare, access_token="",
                              data=declaration)
     
-    print(f"status_code: {status_code}")
+    print(f"POST status_code: {status_code}")
 
     if status_code == 200:
         return True, r["declaration"]["id"]
@@ -119,19 +119,19 @@ def get_config_sets(config_set_name):
     uri_config_set_query = f"?$filter=configSetName eq '{config_set_name}'"
     # config_sets = requests.get("https://" + endpoint + uri_config_sets + uri_config_set_query,
     #                         headers=headers, verify=False)
-    status_code, config_sets = api_call(endpoint=endpoint, method="get", uri=uri_config_sets+uri_config_set_query,
+    status_code, r = api_call(endpoint=endpoint, method="get", uri=uri_config_sets+uri_config_set_query,
                            access_token="")
     
-    if len(config_sets["items"]) > 0:
-        config_set_self_link = config_sets["items"][0]["selfLink"]
+    print(f"GET status_code: {status_code}")
+    
+    if len(r["items"]) > 0:
+        config_set_self_link = r["items"][0]["selfLink"]
 
     app_move_content = {}
     app_move_content["componentAppReferencesToMove"] = [{"link": config_set_self_link}]
     app_move_content["targetGlobalAppName"] = global_app_name
     app_move_content["deleteEmptyGlobalAppsWhenDone"] = False
     app_move_content["requireNewGlobalApp"] = True
-
-    print(f"app_move_content: {app_move_content}")
 
     return app_move_content
 
@@ -168,44 +168,34 @@ def move_application(app_move_content):
     status_code, r_juice_shop_move = api_call(endpoint=endpoint, method="post", uri=uri_merge_move, access_token="", data=app_move_content)
 
 
-# get_auth_token()
+def main():
 
-input("Press enter to deploy Juice Shop")
+    input("Press enter to deploy Juice Shop")
 
-juice_shop_02a_dec = load_declaration("juice-shop/juice-shop_02a.json")
-juice_shop_02b_dec = load_declaration("juice-shop/juice-shop_02b.json")
+    juice_shop_02a_dec = load_declaration("juice-shop/juice-shop_02a.json")
+    juice_shop_02b_dec = load_declaration("juice-shop/juice-shop_02b.json")
 
-juice_shop_02a_created, juice_shop_02a = post_declaration(juice_shop_02a_dec)
-print(f"juice_shop_02a_created: {juice_shop_02a_created}")
-juice_shop_02b_created, juice_shop_02b = post_declaration(juice_shop_02b_dec)
-print(f"juice_shop_02b_created: {juice_shop_02b_created}")
+    juice_shop_02a_created, juice_shop_02a = post_declaration(juice_shop_02a_dec)
+    print(f"juice_shop_02a_created: {juice_shop_02a_created}")
+    juice_shop_02b_created, juice_shop_02b = post_declaration(juice_shop_02b_dec)
+    print(f"juice_shop_02b_created: {juice_shop_02b_created}")
 
-config_set_name = get_config_set_name(juice_shop_02a_dec)
-print(f"config_set_name: {config_set_name}")
+    config_set_name = get_config_set_name(juice_shop_02a_dec)
+    print(f"config_set_name: {config_set_name}")
 
-# r_juice_shop_02b = requests.post("https://" + endpoint + uri_as3_declare,
-#                                  data=json.dumps(juice_shop_02b), headers=headers, verify=False)
-# print(f"r_juice_shop_02b: {r_juice_shop_02b.json()}")
+    app_move_content = get_config_sets(config_set_name)
 
-app_move_content = get_config_sets(config_set_name)
+    move_application(app_move_content)
 
-move_application(app_move_content)
+    input("Press enter to delete Juice Shop from BIG-IP 02A")
 
-input("Press enter to delete Juice Shop from BIG-IP 02A")
+    juice_shop_02a_delete_dec = load_declaration("juice-shop/juice-shop_delete_02a.json")
+    juice_shop_02b_delete_dec = load_declaration("juice-shop/juice-shop_delete_02b.json")
 
-juice_shop_02a_delete_dec = load_declaration("juice-shop/juice-shop_delete_02a.json")
-juice_shop_02b_delete_dec = load_declaration("juice-shop/juice-shop_delete_02b.json")
+    juice_shop_02a_deleted, juice_shop_02a_delete = post_declaration(juice_shop_02a_delete_dec)
 
-juice_shop_02a_deleted, juice_shop_02a_delete = post_declaration(juice_shop_02a_delete_dec)
+    input("Press enter to delete Juice Shop from BIG-IP 02B")
 
-# r_juice_shop_delete_02a = requests.post("https://" + endpoint + uri_as3_declare,
-#                                         data=json.dumps(juice_shop_delete_02a), headers=headers, verify=False)
-# print(f"r_juice_shop_02a: {r_juice_shop_delete_02a.json()}")
+    juice_shop_02b_deleted, juice_shop_02b_delete = post_declaration(juice_shop_02b_delete_dec)
 
-input("Press enter to delete Juice Shop from BIG-IP 02B")
-
-juice_shop_02b_deleted, juice_shop_02b_delete = post_declaration(juice_shop_02b_delete_dec)
-
-# r_juice_shop_delete_02b = requests.post("https://" + endpoint + uri_as3_declare,
-#                                         data=json.dumps(juice_shop_delete_02b),headers=headers, verify=False)
-# print(f"r_juice_shop_02b: {r_juice_shop_delete_02b.json()}")
+main()
