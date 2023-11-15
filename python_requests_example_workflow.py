@@ -201,6 +201,11 @@ def main():
     print("Moving Juice Shop to dedicated application space\n")
     move_application(app_move_content)
 
+
+    # r = requests.get(f"https://{endpoint}/mgmt/cm/global/global-apps")
+    status_code, global_apps = api_call(endpoint=endpoint, method="get", uri="//mgmt/cm/global/global-apps", access_token="")
+    print(f"global_apps: {global_apps}")
+
     input("Press enter to delete Juice Shop deployment\n")
 
     print("Loading Juice Shop 02a deletion declaration")
