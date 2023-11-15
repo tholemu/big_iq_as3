@@ -168,14 +168,13 @@ def get_config_set_name(declaration):
 def move_application(app_move_content):
     # r_juice_shop_move = requests.post("https://" + endpoint + uri_merge_move,
     #                                 data=json.dumps(app_move_content), headers=headers, verify=False)
-    status_code, r_juice_shop_move = api_call(endpoint=endpoint, method="post", uri=uri_merge_move, access_token="", data=app_move_content)
+    status_code, r = api_call(endpoint=endpoint, method="post", uri=uri_merge_move, access_token="", data=app_move_content)
 
-    print(f"r_juice_shop_move: {r_juice_shop_move}")
 
 def get_global_app_id():
-    status_code, global_apps = api_call(endpoint=endpoint, method="get", uri="//mgmt/cm/global/global-apps", access_token="")
+    status_code, r = api_call(endpoint=endpoint, method="get", uri="//mgmt/cm/global/global-apps", access_token="")
     
-    for item in global_apps["items"]:
+    for item in r["items"]:
         if item["name"] == global_app_name:
             global_app_id = item["id"]
     
