@@ -80,7 +80,6 @@ def api_call(endpoint, method, uri, access_token, data=None):
             if "token" in r.json().keys():
                 auth_token = r.json()["token"]["token"]
                 headers["X-F5-Auth-Token"] = auth_token
-                print(f"headers: {headers}")
             else:
                 status = r.json()["status"]
                 return f"Authoriation failed with a {status} error"
