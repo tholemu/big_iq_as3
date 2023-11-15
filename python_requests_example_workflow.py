@@ -34,7 +34,7 @@ auth_data           = {"username":username,"password":password,"loginProviderNam
 def load_declaration(filename):
     with open(filename) as file:
         declaration = file.read()
-        declaration = json.loads(juice_shop_02a)
+        declaration = json.loads(declaration)
     return declaration
 
 ### Authorization
