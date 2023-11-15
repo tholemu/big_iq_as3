@@ -85,16 +85,16 @@ def api_call(endpoint, method, uri, access_token, data=None):
                 return f"Authoriation failed with a {status} error"
 
         if method == "get":
-            response = requests.get(f"https://{endpoint}{uri}", headers=headers)
+            response = requests.get(f"https://{endpoint}{uri}", headers=headers, verify=False)
         elif method == "patch":
-            response = requests.patch(f"https://{endpoint}{uri}", headers=headers, data=json.dumps(data))
+            response = requests.patch(f"https://{endpoint}{uri}", headers=headers, data=json.dumps(data), verify=False)
             print(response.json())
         elif method == "put":
-            response = requests.put(f"https://{endpoint}{uri}", headers=headers, data=json.dumps(data))
+            response = requests.put(f"https://{endpoint}{uri}", headers=headers, data=json.dumps(data), verify=False)
         elif method == "post":
-            response = requests.post(f"https://{endpoint}{uri}", headers=headers, data=json.dumps(data))
+            response = requests.post(f"https://{endpoint}{uri}", headers=headers, data=json.dumps(data), verify=False)
         elif method == "delete":
-            response = requests.delete(f"https://{endpoint}{uri}", headers=headers)
+            response = requests.delete(f"https://{endpoint}{uri}", headers=headers, verify=False)
 
         return response.status_code, response.json()
     else:
