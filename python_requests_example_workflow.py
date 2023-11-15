@@ -229,7 +229,7 @@ def main():
     print("Getting global app ID")
     global_app_id = get_global_app_id()
 
-    print(f"Deleting global app '{global_app_name}")
+    print(f"Deleting global app '{global_app_name}'")
     delete_global_app(global_app_id)
 
 
