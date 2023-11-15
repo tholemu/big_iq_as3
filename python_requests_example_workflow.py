@@ -30,6 +30,7 @@ uri_device_stats    = "/mgmt/shared/diagnostics/device-stats"
 uri_as3_declare     = "/mgmt/shared/appsvcs/declare"
 uri_config_sets     = "/mgmt/cm/global/config-sets/"
 uri_merge_move      = "/mgmt/cm/global/global-apps-merge-move"
+uri_global_apps     = "/mgmt/cm/global/global-apps/"
 auth_data           = {"username":username,"password":password,"loginProviderName":"tmos"}
 
 ### Load AS3 declaration from file
@@ -171,9 +172,18 @@ def move_application(app_move_content):
 
     print(f"r_juice_shop_move: {r_juice_shop_move}")
 
+def get_global_app_id():
+    status_code, global_apps = api_call(endpoint=endpoint, method="get", uri="//mgmt/cm/global/global-apps", access_token="")
+    print(f"global_apps: {global_apps}")
+    for item in global_apps["items"]:
+        if item["name"] == global_app_name:
+            global_app_id = item["id"]
+    print(f"global_app_id: {global_app_id}")
+    return global_app_id
+
 def delete_global_app(id):
     # DELETE https://c702a32c-19d2-4377-b85b-7cb88d2eb982.access.udf.f5.com/mgmt/cm/global/global-apps/0a09942c-b9c1-3690-b89c-7fe7c34f7722
-    pass
+    status_code, r = api_call(endpoint=endpoint, method="delete", uri=uri_global_apps + id, access_token="")
 
 def main():
 
@@ -201,15 +211,6 @@ def main():
     print("Moving Juice Shop to dedicated application space\n")
     move_application(app_move_content)
 
-
-    # r = requests.get(f"https://{endpoint}/mgmt/cm/global/global-apps")
-    status_code, global_apps = api_call(endpoint=endpoint, method="get", uri="//mgmt/cm/global/global-apps", access_token="")
-    print(f"global_apps: {global_apps}")
-    for item in global_apps["items"]:
-        if item["name"] == global_app_name:
-            global_app_id = item["id"]
-    print(f"global_app_id: {global_app_id}")
-
     input("Press enter to delete Juice Shop deployment\n")
 
     print("Loading Juice Shop 02a deletion declaration")
@@ -224,5 +225,12 @@ def main():
     # print("Deleting Juice Shop 02b")
     # juice_shop_02b_deleted, juice_shop_02b_delete = post_declaration(juice_shop_02b_delete_dec)
     # print(f"juice_shop_02b_deleted: {juice_shop_02b_deleted}\n")
+
+    print("Getting global app ID")
+    global_app_id = get_global_app_id()
+
+    print(f"Deleting global app '{global_app_name}")
+    delete_global_app(global_app_id)
+
 
 main()
