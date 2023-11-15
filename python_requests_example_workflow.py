@@ -17,6 +17,8 @@ import requests
 import json
 from dotenv import load_dotenv
 
+requests.packages.urllib3.disable_warnings()
+
 load_dotenv()
 
 endpoint            = os.getenv("ENDPOINT")
