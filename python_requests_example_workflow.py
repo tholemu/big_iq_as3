@@ -80,6 +80,7 @@ def api_call(endpoint, method, uri, access_token, data=None):
             if "token" in r.json().keys():
                 auth_token = r.json()["token"]["token"]
                 headers["X-F5-Auth-Token"] = auth_token
+                print(f"headers: headers")
             else:
                 status = r.json()["status"]
                 return f"Authoriation failed with a {status} error"
@@ -96,6 +97,7 @@ def api_call(endpoint, method, uri, access_token, data=None):
         elif method == "delete":
             response = requests.delete(f"https://{endpoint}{uri}", headers=headers, verify=False)
 
+        print(f"response.json(): {response.json()}")
         return response.status_code, response.json()
     else:
         return 400, f"Invalid method '{method}'"
