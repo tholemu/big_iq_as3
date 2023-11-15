@@ -169,6 +169,11 @@ def move_application(app_move_content):
     #                                 data=json.dumps(app_move_content), headers=headers, verify=False)
     status_code, r_juice_shop_move = api_call(endpoint=endpoint, method="post", uri=uri_merge_move, access_token="", data=app_move_content)
 
+    print(f"r_juice_shop_move: {r_juice_shop_move}")
+
+def delete_global_app(id):
+    # DELETE https://c702a32c-19d2-4377-b85b-7cb88d2eb982.access.udf.f5.com/mgmt/cm/global/global-apps/0a09942c-b9c1-3690-b89c-7fe7c34f7722
+    pass
 
 def main():
 
