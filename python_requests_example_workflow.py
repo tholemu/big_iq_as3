@@ -17,6 +17,7 @@ import requests
 import json
 from dotenv import load_dotenv
 
+# Silence HTTPS verification warning messages
 requests.packages.urllib3.disable_warnings()
 
 load_dotenv()
@@ -50,7 +51,6 @@ def load_declaration(filename):
     # headers = {"X-F5-Auth-Token": auth_token}
     # return headers
 
-
 ### Stats Collection
 # def get_device_stats():
 #     r_stats = requests.get("https://" + endpoint + uri_device_stats,
@@ -60,11 +60,12 @@ def load_declaration(filename):
 #         print(f"{stat}: {r_stats.json()['entries'][stat]}")
 
 
-### Perform BIG-IP API Calls
-'''
+''' Perform BIG-IQ API Calls
+
 Each workflow-specific function should leverage the api_call
 function so that login / access token obtainment and REST 
 method executions are handled consistently.
+
 '''
 def api_call(endpoint, method, uri, access_token, data=None):
     if method in ["get", "patch", "put", "post", "delete"]:
@@ -104,8 +105,6 @@ def api_call(endpoint, method, uri, access_token, data=None):
         return 400, f"Invalid method '{method}'"
 
 def post_declaration(declaration):
-    # r_declaration = requests.post("https://" + endpoint + uri_as3_declare,
-    #                                 data=json.dumps(juice_shop_02a), headers=headers, verify=False)
     status_code, r = api_call(endpoint=endpoint, method="post", uri=uri_as3_declare, access_token="",
                              data=declaration)
     
@@ -118,8 +117,6 @@ def post_declaration(declaration):
 
 def get_config_sets(config_set_name):
     uri_config_set_query = f"?$filter=configSetName eq '{config_set_name}'"
-    # config_sets = requests.get("https://" + endpoint + uri_config_sets + uri_config_set_query,
-    #                         headers=headers, verify=False)
     status_code, r = api_call(endpoint=endpoint, method="get", uri=uri_config_sets+uri_config_set_query,
                            access_token="")
     print(f"get_config_sets GET status_code: {status_code}")
@@ -166,8 +163,6 @@ def get_config_set_name(declaration):
     return config_set_name
 
 def move_application(app_move_content):
-    # r_juice_shop_move = requests.post("https://" + endpoint + uri_merge_move,
-    #                                 data=json.dumps(app_move_content), headers=headers, verify=False)
     status_code, r = api_call(endpoint=endpoint, method="post", uri=uri_merge_move, access_token="", data=app_move_content)
     print(f"move_application POST status code: {status_code}")
 
@@ -190,7 +185,6 @@ def get_global_app_id():
         return False, r
 
 def delete_global_app(id):
-    # DELETE https://c702a32c-19d2-4377-b85b-7cb88d2eb982.access.udf.f5.com/mgmt/cm/global/global-apps/0a09942c-b9c1-3690-b89c-7fe7c34f7722
     status_code, r = api_call(endpoint=endpoint, method="delete", uri=uri_global_apps + id, access_token="")
     print(f"delete_global_app DELETE status code: {status_code}")
 
