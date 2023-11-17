@@ -177,9 +177,9 @@ def get_global_app_id():
     for item in r["items"]:
         if item["name"] == global_app_name:
             global_app_id = item["id"]
-    
-    print(f"global_app_id: {global_app_id}")
+
     if status_code == 200:
+        print(f"global_app_id: {global_app_id}")
         return True, global_app_id
     else:
         return False, r
@@ -214,7 +214,7 @@ def main():
     print(f"config_set_name: {config_set_name}\n")
 
     print("Generating app move content")
-    app_move_content = get_config_sets(config_set_name)
+    app_moved, app_move_content = get_config_sets(config_set_name)
 
     print("Moving Juice Shop to dedicated application space\n")
     move_application(app_move_content)
@@ -235,7 +235,7 @@ def main():
     # print(f"juice_shop_02b_deleted: {juice_shop_02b_deleted}\n")
 
     print("Getting global app ID")
-    global_app_id = get_global_app_id()
+    global_app_id_retrieved, global_app_id = get_global_app_id()
 
     print(f"Deleting global app '{global_app_name}'")
     delete_global_app(global_app_id)
