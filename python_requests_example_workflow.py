@@ -116,7 +116,6 @@ def post_declaration(declaration):
     else:
         return False, r
 
-
 def get_config_sets(config_set_name):
     uri_config_set_query = f"?$filter=configSetName eq '{config_set_name}'"
     # config_sets = requests.get("https://" + endpoint + uri_config_sets + uri_config_set_query,
@@ -134,7 +133,10 @@ def get_config_sets(config_set_name):
     app_move_content["deleteEmptyGlobalAppsWhenDone"] = False
     app_move_content["requireNewGlobalApp"] = True
 
-    return app_move_content
+    if status_code == 200:
+        return True, app_move_content
+    else:
+        return False, r
 
 # Get the configSetName value from the AS3 declaration
 #
@@ -169,6 +171,11 @@ def move_application(app_move_content):
     status_code, r = api_call(endpoint=endpoint, method="post", uri=uri_merge_move, access_token="", data=app_move_content)
     print(f"move_application POST status code: {status_code}")
 
+    if status_code == 200:
+        return True, r
+    else:
+        return False, r
+
 def get_global_app_id():
     status_code, r = api_call(endpoint=endpoint, method="get", uri="//mgmt/cm/global/global-apps", access_token="")
     print(f"get_global_app_id status code: {status_code}")
@@ -177,12 +184,20 @@ def get_global_app_id():
             global_app_id = item["id"]
     
     print(f"global_app_id: {global_app_id}")
-    return global_app_id
+    if status_code == 200:
+        return True, global_app_id
+    else:
+        return False, r
 
 def delete_global_app(id):
     # DELETE https://c702a32c-19d2-4377-b85b-7cb88d2eb982.access.udf.f5.com/mgmt/cm/global/global-apps/0a09942c-b9c1-3690-b89c-7fe7c34f7722
     status_code, r = api_call(endpoint=endpoint, method="delete", uri=uri_global_apps + id, access_token="")
     print(f"delete_global_app DELETE status code: {status_code}")
+
+    if status_code == 200:
+        return True, r
+    else:
+        return False, r
 
 def main():
 
