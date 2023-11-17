@@ -99,7 +99,6 @@ def api_call(endpoint, method, uri, access_token, data=None):
         elif method == "delete":
             response = requests.delete(f"https://{endpoint}{uri}", headers=headers, verify=False)
 
-        # print(f"response.json(): {response.json()}")
         return response.status_code, response.json()
     else:
         return 400, f"Invalid method '{method}'"
