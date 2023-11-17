@@ -99,7 +99,6 @@ def api_call(endpoint, method, uri, access_token, data=None):
         elif method == "delete":
             response = requests.delete(f"https://{endpoint}{uri}", headers=headers, verify=False)
 
-        # print(f"response.json(): {response.json()}")
         return response.status_code, response.json()
     else:
         return 400, f"Invalid method '{method}'"
@@ -110,7 +109,7 @@ def post_declaration(declaration):
     status_code, r = api_call(endpoint=endpoint, method="post", uri=uri_as3_declare, access_token="",
                              data=declaration)
     
-    print(f"POST status_code: {status_code}")
+    print(f"post_declaration POST status_code: {status_code}")
 
     if status_code == 200:
         return True, r["declaration"]["id"]
@@ -124,8 +123,7 @@ def get_config_sets(config_set_name):
     #                         headers=headers, verify=False)
     status_code, r = api_call(endpoint=endpoint, method="get", uri=uri_config_sets+uri_config_set_query,
                            access_token="")
-    
-    print(f"GET status_code: {status_code}")
+    print(f"get_config_sets GET status_code: {status_code}")
     
     if len(r["items"]) > 0:
         config_set_self_link = r["items"][0]["selfLink"]
@@ -169,11 +167,11 @@ def move_application(app_move_content):
     # r_juice_shop_move = requests.post("https://" + endpoint + uri_merge_move,
     #                                 data=json.dumps(app_move_content), headers=headers, verify=False)
     status_code, r = api_call(endpoint=endpoint, method="post", uri=uri_merge_move, access_token="", data=app_move_content)
-
+    print(f"move_application POST status code: {status_code}")
 
 def get_global_app_id():
     status_code, r = api_call(endpoint=endpoint, method="get", uri="//mgmt/cm/global/global-apps", access_token="")
-    
+    print(f"get_global_app_id status code: {status_code}")
     for item in r["items"]:
         if item["name"] == global_app_name:
             global_app_id = item["id"]
@@ -184,6 +182,7 @@ def get_global_app_id():
 def delete_global_app(id):
     # DELETE https://c702a32c-19d2-4377-b85b-7cb88d2eb982.access.udf.f5.com/mgmt/cm/global/global-apps/0a09942c-b9c1-3690-b89c-7fe7c34f7722
     status_code, r = api_call(endpoint=endpoint, method="delete", uri=uri_global_apps + id, access_token="")
+    print(f"delete_global_app DELETE status code: {status_code}")
 
 def main():
 
@@ -205,7 +204,7 @@ def main():
     config_set_name = get_config_set_name(juice_shop_02a_dec)
     print(f"config_set_name: {config_set_name}\n")
 
-    print("Generating app move content\n")
+    print("Generating app move content")
     app_move_content = get_config_sets(config_set_name)
 
     print("Moving Juice Shop to dedicated application space\n")
@@ -229,7 +228,7 @@ def main():
     print("Getting global app ID")
     global_app_id = get_global_app_id()
 
-    print(f"Deleting global app '{global_app_name}")
+    print(f"Deleting global app '{global_app_name}'")
     delete_global_app(global_app_id)
 
 
