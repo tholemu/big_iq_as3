@@ -177,9 +177,9 @@ def get_global_app_id():
     for item in r["items"]:
         if item["name"] == global_app_name:
             global_app_id = item["id"]
-    
-    print(f"global_app_id: {global_app_id}")
+
     if status_code == 200:
+        print(f"global_app_id: {global_app_id}")
         return True, global_app_id
     else:
         return False, r
