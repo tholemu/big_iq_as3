@@ -15,7 +15,7 @@
             "class": "Tenant",
             "A1": {
                 "class": "Application",
-                "service": {
+                "juice-shop-vs": {
                     "class": "Service_HTTP",
                     "virtualAddresses": [
                         "10.1.10.200"
