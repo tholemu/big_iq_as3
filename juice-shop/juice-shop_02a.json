@@ -20,7 +20,10 @@
                     "virtualAddresses": [
                         "10.1.10.200"
                     ],
-                    "pool": "juice-shop-pool"
+                    "pool": "juice-shop-pool",
+                    "policyWAF": {
+                        "bigip": "/Common/rapid-deployment"
+                      }
                 },
                 "juice-shop-pool": {
                     "class": "Pool",
