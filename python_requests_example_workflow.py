@@ -114,7 +114,8 @@ def post_declaration(declaration):
     print(f"post_declaration POST status_code: {status_code}")
 
     if status_code in [200, 202]:
-        return True, r["declaration"]["id"]
+        if status_code == 200: return True, r["declaration"]["id"]
+        if status_code == 202: return True, r["id"]
     else:
         return False, r
 
