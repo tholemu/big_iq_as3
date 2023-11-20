@@ -43,6 +43,9 @@
                   "class": "WAF_Policy",
                   "url": "https://raw.githubusercontent.com/f5devcentral/f5-asm-policy-templates/v1.1/owasp_ready_template/owasp_policy_v1.0.json",
                   "ignoreChanges": false
+                },
+                "profileAnalytics": {
+                    "use": "/Common/Log all requests"
                 }
             }
         }
