@@ -123,6 +123,7 @@ def get_config_sets(config_set_name):
     status_code, r = api_call(endpoint=endpoint, method="get", uri=uri_config_sets+uri_config_set_query,
                            access_token="")
     print(f"get_config_sets GET status_code: {status_code}")
+    print(f"get_config_sets GET response: {r}")
     
     if len(r["items"]) > 0:
         config_set_self_link = r["items"][0]["selfLink"]
