@@ -25,7 +25,7 @@
                       "use": "juice-shop-waf"
                     },
                     "profileAnalytics": {
-                        "use": "/Common/Log%20all%20requests"
+                        "use": "/Common/log-all-requests"
                     }
                 },
                 "juice-shop-pool": {
