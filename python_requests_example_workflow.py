@@ -201,14 +201,14 @@ def main():
     input("Press enter to deploy Juice Shop\n")
 
     print("Loading Juice Shop 02 deployment declaration")
-    juice_shop_02a_dec = load_declaration("juice-shop/juice-shop_02a.json")
+    juice_shop_02_dec = load_declaration("juice-shop/juice-shop_02a.json")
 
     print("Deploying Juice Shop 02 deployment declaration")
-    juice_shop_02a_created, juice_shop_02a = post_declaration(juice_shop_02a_dec)
-    print(f"juice_shop_02a_created: {juice_shop_02a_created}\n")
+    juice_shop_02_created, juice_shop_02 = post_declaration(juice_shop_02_dec)
+    print(f"juice_shop_02_created: {juice_shop_02_created}\n")
 
     print("Getting configSetName")
-    config_set_name = get_config_set_name(juice_shop_02a_dec)
+    config_set_name = get_config_set_name(juice_shop_02_dec)
     print(f"config_set_name: {config_set_name}\n")
 
     print("Generating app move content")
@@ -219,12 +219,12 @@ def main():
 
     input("Press enter to delete Juice Shop deployment\n")
 
-    print("Loading Juice Shop 02a deletion declaration")
-    juice_shop_02a_delete_dec = load_declaration("juice-shop/juice-shop_delete_02a.json")
+    print("Loading Juice Shop 02 deletion declaration")
+    juice_shop_02_delete_dec = load_declaration("juice-shop/juice-shop_delete_02a.json")
 
     print("Deleting Juice Shop 02a")
-    juice_shop_02a_deleted, juice_shop_02a_delete = post_declaration(juice_shop_02a_delete_dec)
-    print(f"juice_shop_02a_deleted: {juice_shop_02a_deleted}\n")
+    juice_shop_02_deleted, juice_shop_02_delete = post_declaration(juice_shop_02_delete_dec)
+    print(f"juice_shop_02_deleted: {juice_shop_02_deleted}\n")
 
     print("Getting global app ID")
     global_app_id_retrieved, global_app_id = get_global_app_id()
