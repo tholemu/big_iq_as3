@@ -196,7 +196,7 @@ def traffic_test(dataset, request_count, send_malicious=True):
         dataset += dataset
     for i in range(0, request_count - 1):
         if i % 2 == 1:
-            r = requests.post("http://10.1.10.200", data=json.dumps(dataset))
+            r = requests.post("http://10.1.10.200", data=dataset)
         else:
             r = requests.get("http://10.1.10.200/?a=<script>")
         print("\rRequest " + str(i+1) + "/" + str(request_count), end="")
@@ -221,7 +221,7 @@ def main():
     print("Generating app move content...")
     app_moved, app_move_content = get_config_sets(config_set_name)
 
-    print("\nMoving Juice Shop to dedicated application space...\n")
+    print("\nMoving Juice Shop to dedicated application space...")
     move_application(app_move_content)
 
     input("\nPress enter to deploy Juice Shop with a WAF policy...\n")
