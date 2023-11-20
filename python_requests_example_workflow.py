@@ -1,20 +1,5 @@
 # BIG-IQ AS3 Workflow via Requests
 
-''' Testing procedure
-
-# Create a large string of data by concatenating the
-# Juice Shop declaration 20 times and then issuing
-# 100 successive POST requests to the VS
-big_data = ""
-for i in range(0,19):
-    big_data += juice_shop_02_dec
-for i in range(0,99):
-    r = requests.post("http://10.1.10.200", data=json.dumps(big_data))
-
-to watch traffic on the BIG-IP: tcpdump -X -nni 0.0 host 10.1.10.200
-
-'''
-
 import os
 import requests
 import json
@@ -201,6 +186,21 @@ def delete_global_app(id):
     else:
         return False, r
 
+# Create a large string of data by concatenating the
+# Juice Shop declaration 20 times and then issuing
+# 100 successive POST requests to the VS
+#
+# Observe traffic on the BIG-IP: tcpdump -X -nni 0.0 host 10.1.10.200
+def traffic_test(dataset, request_count, send_malicious=True):
+    for i in range(0, 19):
+        dataset += dataset
+    for i in range(0, request_count - 1):
+        if i % 2:
+            r = requests.post("http://10.1.10.200", data=json.dumps(dataset))
+        else:
+            r = requests.get("http://10.1.10.200/?a=<script>")
+    print("Test completed\n")
+
 def main():
 
     print("Loading Juice Shop 02 deployment declaration...")
@@ -229,6 +229,9 @@ def main():
     juice_shop_02_waf_created, juice_shop_02_waf = post_declaration(juice_shop_02_waf_dec)
     print(f"juice_shop_02_waf_created: {juice_shop_02_waf_created}")
     print(f"juice shop ID: {juice_shop_02}\n")
+
+    print("Running traffic test to Juice Shop...")
+    traffic_test(juice_shop_02_dec, 100, send_malicious=True)
 
     input("Press enter to delete Juice Shop deployment...\n")
 
