@@ -199,6 +199,7 @@ def traffic_test(dataset, request_count, send_malicious=True):
             r = requests.post("http://10.1.10.200", data=json.dumps(dataset))
         else:
             r = requests.get("http://10.1.10.200/?a=<script>")
+        print("\rRequest " + str(i+1) + "/" + str(request_count), end="")
     print("Test completed\n")
 
 def main():
