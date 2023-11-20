@@ -223,7 +223,7 @@ def main():
     print("\nMoving Juice Shop to dedicated application space...\n")
     move_application(app_move_content)
 
-    input("Press enter to deploy Juice Shop with a WAF policy...\n")
+    input("\nPress enter to deploy Juice Shop with a WAF policy...\n")
 
     print("Deploying Juice Shop 02 WAF declaration...")
     juice_shop_02_waf_created, juice_shop_02_waf = post_declaration(juice_shop_02_waf_dec)
@@ -231,7 +231,7 @@ def main():
     print(f"juice shop ID: {juice_shop_02}\n")
 
     print("Running traffic test to Juice Shop...")
-    traffic_test(juice_shop_02_dec, 100, send_malicious=True)
+    traffic_test(json.dumps(juice_shop_02_dec), 100, send_malicious=True)
 
     input("Press enter to delete Juice Shop deployment...\n")
 
