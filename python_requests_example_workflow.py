@@ -32,6 +32,7 @@ uri_as3_declare     = "/mgmt/shared/appsvcs/declare"
 uri_config_sets     = "/mgmt/cm/global/config-sets/"
 uri_merge_move      = "/mgmt/cm/global/global-apps-merge-move"
 uri_global_apps     = "/mgmt/cm/global/global-apps/"
+uri_waf_policies    = "/mgmt/cm/asm/working-config/policies"
 auth_data           = {"username":username,"password":password,"loginProviderName":"tmos"}
 
 ### Load AS3 declaration from file
