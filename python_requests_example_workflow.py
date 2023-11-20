@@ -209,6 +209,7 @@ def main():
     print("Deploying Juice Shop 02 deployment declaration")
     juice_shop_02_created, juice_shop_02 = post_declaration(juice_shop_02_dec)
     print(f"juice_shop_02_created: {juice_shop_02_created}\n")
+    print(f"juice shop ID: {juice_shop_02}")
 
     print("Getting configSetName")
     config_set_name = get_config_set_name(juice_shop_02_dec)
@@ -225,13 +226,14 @@ def main():
     print("Deploying Juice Shop 02 WAF declaration")
     juice_shop_02_waf_created, juice_shop_02_waf = post_declaration(juice_shop_02_waf_dec)
     print(f"juice_shop_02_waf_created: {juice_shop_02_waf_created}\n")
+    print(f"juice shop ID: {juice_shop_02}")
 
     input("Press enter to delete Juice Shop deployment\n")
 
     print("Loading Juice Shop 02 deletion declaration")
     juice_shop_02_delete_dec = load_declaration("juice-shop/juice-shop_delete_02.json")
 
-    print("Deleting Juice Shop 02a")
+    print("Deleting Juice Shop 02")
     juice_shop_02_deleted, juice_shop_02_delete = post_declaration(juice_shop_02_delete_dec)
     print(f"juice_shop_02_deleted: {juice_shop_02_deleted}\n")
 
