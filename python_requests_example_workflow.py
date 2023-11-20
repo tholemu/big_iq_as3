@@ -2,10 +2,13 @@
 
 ''' Testing procedure
 
+# Create a large string of data by concatenating the
+# Juice Shop declaration 20 times and then issuing
+# 100 successive POST requests to the VS
 big_data = ""
-for i in range(0,20):
-    big_data += juice_shop_02a
-for i in range(0,100):
+for i in range(0,19):
+    big_data += juice_shop_02_dec
+for i in range(0,99):
     r = requests.post("http://10.1.10.200", data=json.dumps(big_data))
 
 to watch traffic on the BIG-IP: tcpdump -X -nni 0.0 host 10.1.10.200
