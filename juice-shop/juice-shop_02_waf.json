@@ -25,7 +25,7 @@
                       "use": "juice-shop-waf"
                     },
                     "profileTrafficLog": {
-                        "bigip": "/Common/log-all-requests"
+                        "bigip": "log-all-requests"
                     }
                 },
                 "juice-shop-pool": {
