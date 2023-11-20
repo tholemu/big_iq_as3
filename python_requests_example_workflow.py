@@ -202,6 +202,8 @@ def main():
 
     print("Loading Juice Shop 02 deployment declaration")
     juice_shop_02_dec = load_declaration("juice-shop/juice-shop_02a.json")
+    print("Loading Juice Shop 02 deployment declaration")
+    juice_shop_02_waf_dec = load_declaration("juice-shop/juice-juice-shop_02_waf.json")
 
     print("Deploying Juice Shop 02 deployment declaration")
     juice_shop_02_created, juice_shop_02 = post_declaration(juice_shop_02_dec)
@@ -216,6 +218,12 @@ def main():
 
     print("Moving Juice Shop to dedicated application space\n")
     move_application(app_move_content)
+
+    input("Press enter to deploy Juice Shop with a WAF policy\n")
+
+    print("Deploying Juice Shop 02 WAF declaration")
+    juice_shop_02_waf_created, juice_shop_02_waf = post_declaration(juice_shop_02_waf_dec)
+    print(f"juice_shop_02_waf_created: {juice_shop_02_waf_created}\n")
 
     input("Press enter to delete Juice Shop deployment\n")
 
