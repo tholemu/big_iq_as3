@@ -2,10 +2,13 @@
 
 ''' Testing procedure
 
+# Create a large string of data by concatenating the
+# Juice Shop declaration 20 times and then issuing
+# 100 successive POST requests to the VS
 big_data = ""
-for i in range(0,20):
-    big_data += juice_shop_02a
-for i in range(0,100):
+for i in range(0,19):
+    big_data += juice_shop_02_dec
+for i in range(0,99):
     r = requests.post("http://10.1.10.200", data=json.dumps(big_data))
 
 to watch traffic on the BIG-IP: tcpdump -X -nni 0.0 host 10.1.10.200
@@ -114,7 +117,8 @@ def post_declaration(declaration):
     print(f"post_declaration POST status_code: {status_code}")
 
     if status_code in [200, 202]:
-        return True, r["declaration"]["id"]
+        if status_code == 200: return True, r["declaration"]["id"]
+        if status_code == 202: return True, r["id"]
     else:
         return False, r
 
@@ -216,7 +220,7 @@ def main():
     print("Generating app move content...")
     app_moved, app_move_content = get_config_sets(config_set_name)
 
-    print("Moving Juice Shop to dedicated application space...\n")
+    print("\nMoving Juice Shop to dedicated application space...\n")
     move_application(app_move_content)
 
     input("Press enter to deploy Juice Shop with a WAF policy...\n")
