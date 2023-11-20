@@ -217,7 +217,7 @@ def main():
     print("Generating app move content...")
     app_moved, app_move_content = get_config_sets(config_set_name)
 
-    print("Moving Juice Shop to dedicated application space...\n")
+    print("\nMoving Juice Shop to dedicated application space...\n")
     move_application(app_move_content)
 
     input("Press enter to deploy Juice Shop with a WAF policy...\n")
