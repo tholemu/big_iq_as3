@@ -24,8 +24,8 @@
                     "policyWAF": {
                       "use": "juice-shop-waf"
                     },
-                    "profileAnalytics": {
-                        "use": "/Common/log-all-requests"
+                    "profileTrafficLog": {
+                        "bigip": "/Common/log-all-requests"
                     }
                 },
                 "juice-shop-pool": {
