@@ -32,6 +32,7 @@ uri_as3_declare     = "/mgmt/shared/appsvcs/declare"
 uri_config_sets     = "/mgmt/cm/global/config-sets/"
 uri_merge_move      = "/mgmt/cm/global/global-apps-merge-move"
 uri_global_apps     = "/mgmt/cm/global/global-apps/"
+uri_waf_policies    = "/mgmt/cm/asm/working-config/policies"
 auth_data           = {"username":username,"password":password,"loginProviderName":"tmos"}
 
 ### Load AS3 declaration from file
@@ -107,6 +108,8 @@ def api_call(endpoint, method, uri, access_token, data=None):
 def post_declaration(declaration):
     status_code, r = api_call(endpoint=endpoint, method="post", uri=uri_as3_declare, access_token="",
                              data=declaration)
+    
+    print(f"post_declaration POST body: {r}")
     
     print(f"post_declaration POST status_code: {status_code}")
 
@@ -197,20 +200,17 @@ def main():
 
     input("Press enter to deploy Juice Shop\n")
 
-    print("Loading Juice Shop 02a deployment declaration")
-    juice_shop_02a_dec = load_declaration("juice-shop/juice-shop_02a.json")
-    # print("Loading Juice Shop 02b declaration\n")
-    # juice_shop_02b_dec = load_declaration("juice-shop/juice-shop_02b.json")
+    print("Loading Juice Shop 02 deployment declaration")
+    juice_shop_02_dec = load_declaration("juice-shop/juice-shop_02.json")
+    print("Loading Juice Shop 02 WAF deployment declaration")
+    juice_shop_02_waf_dec = load_declaration("juice-shop/juice-shop_02_waf.json")
 
-    print("Deploying Juice Shop 02a deployment declaration")
-    juice_shop_02a_created, juice_shop_02a = post_declaration(juice_shop_02a_dec)
-    print(f"juice_shop_02a_created: {juice_shop_02a_created}\n")
-    # print("Deploying Juice Shop 02b declaration")
-    # juice_shop_02b_created, juice_shop_02b = post_declaration(juice_shop_02b_dec)
-    # print(f"juice_shop_02b_created: {juice_shop_02b_created}\n")
+    print("Deploying Juice Shop 02 deployment declaration")
+    juice_shop_02_created, juice_shop_02 = post_declaration(juice_shop_02_dec)
+    print(f"juice_shop_02_created: {juice_shop_02_created}\n")
 
     print("Getting configSetName")
-    config_set_name = get_config_set_name(juice_shop_02a_dec)
+    config_set_name = get_config_set_name(juice_shop_02_dec)
     print(f"config_set_name: {config_set_name}\n")
 
     print("Generating app move content")
@@ -219,20 +219,20 @@ def main():
     print("Moving Juice Shop to dedicated application space\n")
     move_application(app_move_content)
 
+    input("Press enter to deploy Juice Shop with a WAF policy\n")
+
+    print("Deploying Juice Shop 02 WAF declaration")
+    juice_shop_02_waf_created, juice_shop_02_waf = post_declaration(juice_shop_02_waf_dec)
+    print(f"juice_shop_02_waf_created: {juice_shop_02_waf_created}\n")
+
     input("Press enter to delete Juice Shop deployment\n")
 
-    print("Loading Juice Shop 02a deletion declaration")
-    juice_shop_02a_delete_dec = load_declaration("juice-shop/juice-shop_delete_02a.json")
-    # print("Loading Juice Shop 02b deletion declaration\n")
-    # juice_shop_02b_delete_dec = load_declaration("juice-shop/juice-shop_delete_02b.json")
+    print("Loading Juice Shop 02 deletion declaration")
+    juice_shop_02_delete_dec = load_declaration("juice-shop/juice-shop_delete_02a.json")
 
     print("Deleting Juice Shop 02a")
-    juice_shop_02a_deleted, juice_shop_02a_delete = post_declaration(juice_shop_02a_delete_dec)
-    print(f"juice_shop_02a_deleted: {juice_shop_02a_deleted}\n")
-
-    # print("Deleting Juice Shop 02b")
-    # juice_shop_02b_deleted, juice_shop_02b_delete = post_declaration(juice_shop_02b_delete_dec)
-    # print(f"juice_shop_02b_deleted: {juice_shop_02b_deleted}\n")
+    juice_shop_02_deleted, juice_shop_02_delete = post_declaration(juice_shop_02_delete_dec)
+    print(f"juice_shop_02_deleted: {juice_shop_02_deleted}\n")
 
     print("Getting global app ID")
     global_app_id_retrieved, global_app_id = get_global_app_id()
