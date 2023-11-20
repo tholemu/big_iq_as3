@@ -201,7 +201,7 @@ def main():
     input("Press enter to deploy Juice Shop\n")
 
     print("Loading Juice Shop 02 deployment declaration")
-    juice_shop_02_dec = load_declaration("juice-shop/juice-shop_02a.json")
+    juice_shop_02_dec = load_declaration("juice-shop/juice-shop_02.json")
     print("Loading Juice Shop 02 deployment declaration")
     juice_shop_02_waf_dec = load_declaration("juice-shop/juice-juice-shop_02_waf.json")
 
