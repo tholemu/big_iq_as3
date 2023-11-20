@@ -113,7 +113,7 @@ def post_declaration(declaration):
     
     print(f"post_declaration POST status_code: {status_code}")
 
-    if status_code == 200:
+    if status_code in [200, 202]:
         return True, r["declaration"]["id"]
     else:
         return False, r
@@ -228,7 +228,7 @@ def main():
     input("Press enter to delete Juice Shop deployment\n")
 
     print("Loading Juice Shop 02 deletion declaration")
-    juice_shop_02_delete_dec = load_declaration("juice-shop/juice-shop_delete_02a.json")
+    juice_shop_02_delete_dec = load_declaration("juice-shop/juice-shop_delete_02.json")
 
     print("Deleting Juice Shop 02a")
     juice_shop_02_deleted, juice_shop_02_delete = post_declaration(juice_shop_02_delete_dec)
