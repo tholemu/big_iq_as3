@@ -202,16 +202,15 @@ def traffic_test(dataset, request_count, send_malicious=True):
         else:
             r = requests.get("http://10.1.10.200/?a=<script>")
         print("\rRequest " + str(i+1) + "/" + str(request_count), end="")
-    sleep(0.5)
-    print("\Traffic generation test completed\n", end="")
+    sleep(1)
+    print("\rTraffic generation test completed\n", end="")
 
 def main():
 
     print("Loading Juice Shop 02 deployment declaration...")
-    sleep(0.5)
+    sleep(1)
     juice_shop_02_dec = load_declaration("juice-shop/juice-shop_02.json")
     print("Loading Juice Shop 02 WAF deployment declaration...")
-    sleep(0.5)
     juice_shop_02_waf_dec = load_declaration("juice-shop/juice-shop_02_waf.json")
 
     print("Deploying Juice Shop 02 deployment declaration...")
@@ -242,7 +241,7 @@ def main():
     input("Press enter to delete Juice Shop deployment...\n")
 
     print("Loading Juice Shop 02 deletion declaration...")
-    sleep(0.5)
+    sleep(1)
     juice_shop_02_delete_dec = load_declaration("juice-shop/juice-shop_delete_02.json")
 
     print("Deleting Juice Shop 02...")
