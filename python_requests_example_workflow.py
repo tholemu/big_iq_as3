@@ -5,6 +5,7 @@ import requests
 import json
 from dotenv import load_dotenv
 from time import sleep
+import concurrent.futures
 
 # Silence HTTPS verification warning messages
 requests.packages.urllib3.disable_warnings()
@@ -237,7 +238,12 @@ def main():
     print(f"juice shop ID: {juice_shop_02}\n")
 
     print("Running traffic test to Juice Shop...")
-    traffic_test(json.dumps(juice_shop_02_dec), 100, send_malicious=True)
+    pool = concurrent.futures.ThreadPoolExecutor(max_workers=2)
+    pool.submit(traffic_test, json.dumps(juice_shop_02_dec), 100)
+    pool.submit(traffic_test, json.dumps(juice_shop_02_dec), 100)
+    pool.shutdown(wait=True)
+
+    # traffic_test(json.dumps(juice_shop_02_dec), 100, send_malicious=True)
 
     input("\nPress enter to delete Juice Shop deployment...\n")
 
