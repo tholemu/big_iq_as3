@@ -181,7 +181,7 @@ def get_global_app_id():
 
 def delete_global_app(id):
     status_code, r = api_call(endpoint=endpoint, method="delete", uri=uri_global_apps + id, access_token="")
-    print(f"delete_global_app DELETE status code: {status_code}")
+    print(f"delete_global_app DELETE status code: {status_code}\n")
 
     if status_code == 200:
         return True, r
