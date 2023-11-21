@@ -4,6 +4,7 @@ import os
 import requests
 import json
 from dotenv import load_dotenv
+from time import sleep
 
 # Silence HTTPS verification warning messages
 requests.packages.urllib3.disable_warnings()
@@ -201,13 +202,15 @@ def traffic_test(dataset, request_count, send_malicious=True):
         else:
             r = requests.get("http://10.1.10.200/?a=<script>")
         print("\rRequest " + str(i+1) + "/" + str(request_count), end="")
-    print("\rTest completed\n", end="")
+    print("\Traffic generation test completed\n", end="")
 
 def main():
 
     print("Loading Juice Shop 02 deployment declaration...")
+    sleep(0.5)
     juice_shop_02_dec = load_declaration("juice-shop/juice-shop_02.json")
     print("Loading Juice Shop 02 WAF deployment declaration...")
+    sleep(0.5)
     juice_shop_02_waf_dec = load_declaration("juice-shop/juice-shop_02_waf.json")
 
     print("Deploying Juice Shop 02 deployment declaration...")
@@ -238,6 +241,7 @@ def main():
     input("Press enter to delete Juice Shop deployment...\n")
 
     print("Loading Juice Shop 02 deletion declaration...")
+    sleep(0.5)
     juice_shop_02_delete_dec = load_declaration("juice-shop/juice-shop_delete_02.json")
 
     print("Deleting Juice Shop 02...")
