@@ -202,6 +202,7 @@ def traffic_test(dataset, request_count, send_malicious=True):
         else:
             r = requests.get("http://10.1.10.200/?a=<script>")
         print("\rRequest " + str(i+1) + "/" + str(request_count), end="")
+    sleep(0.5)
     print("\Traffic generation test completed\n", end="")
 
 def main():
