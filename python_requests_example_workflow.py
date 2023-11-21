@@ -239,7 +239,7 @@ def main():
     print("Running traffic test to Juice Shop...")
     traffic_test(json.dumps(juice_shop_02_dec), 100, send_malicious=True)
 
-    input("Press enter to delete Juice Shop deployment...\n")
+    input("\nPress enter to delete Juice Shop deployment...\n")
 
     print("Loading Juice Shop 02 deletion declaration...")
     sleep(1)
