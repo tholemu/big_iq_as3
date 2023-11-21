@@ -26,4 +26,4 @@ In essentially all lines of work, there exists the consumption, or input, of dat
 
 Being able to speak the language of machines is absolutely critical in today's job markets, and understanding how to manipulate computers so they can speak with one another to achieve our goals is of extremely high value. IT infrastructure provisioning and maintenance is a huge overhead and an area which dramatically benefits from *proper* process automation.
 
-Proper process automation begins with quality data and the tools with which to manipulate said data. It must also be wrapped with diligent governance, oversight, and business process and technical analysis. F5 BIG-IQ with AS3 provides a nice foundation upon which all of these concepts can be designed, driven, and matured.
+Proper process automation begins with quality data and the tools with which to manipulate said data. It must also be wrapped with diligent governance, oversight, and business process and technical analysis. F5 BIG-IQ with AS3 provides a foundation upon which all of these concepts can be designed, driven, and matured.
