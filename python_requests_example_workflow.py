@@ -195,7 +195,7 @@ def delete_global_app(id):
 # Observe traffic on the BIG-IP: tcpdump -X -nni 0.0 host 10.1.10.200
 def traffic_test(dataset, request_count, send_malicious=True):
     data = ""
-    for i in range(0, 19):
+    for i in range(0, 49):
         data += dataset
     for i in range(0, request_count - 1):
         if i % 2 == 1:
