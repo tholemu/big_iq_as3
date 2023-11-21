@@ -1,24 +1,10 @@
 # BIG-IQ AS3 Workflow via Requests
 
-''' Testing procedure
-
-# Create a large string of data by concatenating the
-# Juice Shop declaration 20 times and then issuing
-# 100 successive POST requests to the VS
-big_data = ""
-for i in range(0,19):
-    big_data += juice_shop_02_dec
-for i in range(0,99):
-    r = requests.post("http://10.1.10.200", data=json.dumps(big_data))
-
-to watch traffic on the BIG-IP: tcpdump -X -nni 0.0 host 10.1.10.200
-
-'''
-
 import os
 import requests
 import json
 from dotenv import load_dotenv
+from time import sleep
 
 # Silence HTTPS verification warning messages
 requests.packages.urllib3.disable_warnings()
@@ -201,11 +187,31 @@ def delete_global_app(id):
     else:
         return False, r
 
+# Create a large string of data by concatenating the
+# Juice Shop declaration 20 times and then issuing
+# 100 successive POST requests to the VS
+#
+# Observe traffic on the BIG-IP: tcpdump -X -nni 0.0 host 10.1.10.200
+def traffic_test(dataset, request_count, send_malicious=True):
+    data = ""
+    for i in range(0, 19):
+        data += dataset
+    for i in range(0, request_count - 1):
+        if i % 2 == 1:
+            r = requests.post("http://10.1.10.200", data=data)
+        else:
+            r = requests.get("http://10.1.10.200/?a=<script>")
+        print("\rRequest " + str(i+1) + "/" + str(request_count), end="")
+    sleep(0.5)
+    print("\Traffic generation test completed\n", end="")
+
 def main():
 
     print("Loading Juice Shop 02 deployment declaration...")
+    sleep(0.5)
     juice_shop_02_dec = load_declaration("juice-shop/juice-shop_02.json")
     print("Loading Juice Shop 02 WAF deployment declaration...")
+    sleep(0.5)
     juice_shop_02_waf_dec = load_declaration("juice-shop/juice-shop_02_waf.json")
 
     print("Deploying Juice Shop 02 deployment declaration...")
@@ -220,19 +226,23 @@ def main():
     print("Generating app move content...")
     app_moved, app_move_content = get_config_sets(config_set_name)
 
-    print("\nMoving Juice Shop to dedicated application space...\n")
+    print("\nMoving Juice Shop to dedicated application space...")
     move_application(app_move_content)
 
-    input("Press enter to deploy Juice Shop with a WAF policy...\n")
+    input("\nPress enter to deploy Juice Shop with a WAF policy...\n")
 
     print("Deploying Juice Shop 02 WAF declaration...")
     juice_shop_02_waf_created, juice_shop_02_waf = post_declaration(juice_shop_02_waf_dec)
     print(f"juice_shop_02_waf_created: {juice_shop_02_waf_created}")
     print(f"juice shop ID: {juice_shop_02}\n")
 
+    print("Running traffic test to Juice Shop...")
+    traffic_test(json.dumps(juice_shop_02_dec), 100, send_malicious=True)
+
     input("Press enter to delete Juice Shop deployment...\n")
 
     print("Loading Juice Shop 02 deletion declaration...")
+    sleep(0.5)
     juice_shop_02_delete_dec = load_declaration("juice-shop/juice-shop_delete_02.json")
 
     print("Deleting Juice Shop 02...")
