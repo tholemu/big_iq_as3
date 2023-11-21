@@ -238,14 +238,14 @@ def main():
     print(f"juice shop ID: {juice_shop_02}\n")
 
     print("Running traffic test to Juice Shop...")
-    # pool = concurrent.futures.ThreadPoolExecutor(max_workers=4)
-    # pool.submit(traffic_test, json.dumps(juice_shop_02_dec), 100)
-    # pool.submit(traffic_test, json.dumps(juice_shop_02_dec), 100)
-    # pool.submit(traffic_test, json.dumps(juice_shop_02_dec), 100)
-    # pool.submit(traffic_test, json.dumps(juice_shop_02_dec), 100)
-    with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
-        executor.map(traffic_test, json.dumps(juice_shop_02_dec), 100)
-    # pool.shutdown(wait=True)
+    pool = concurrent.futures.ThreadPoolExecutor(max_workers=4)
+    pool.submit(traffic_test, json.dumps(juice_shop_02_dec), 100)
+    pool.submit(traffic_test, json.dumps(juice_shop_02_dec), 100)
+    pool.submit(traffic_test, json.dumps(juice_shop_02_dec), 100)
+    pool.submit(traffic_test, json.dumps(juice_shop_02_dec), 100)
+    # with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
+    #     executor.map(traffic_test, json.dumps(juice_shop_02_dec), 100)
+    pool.shutdown(wait=True)
 
     # traffic_test(json.dumps(juice_shop_02_dec), 100, send_malicious=True)
 
