@@ -5,6 +5,7 @@ import requests
 import json
 from dotenv import load_dotenv
 from time import sleep
+import concurrent.futures
 
 # Silence HTTPS verification warning messages
 requests.packages.urllib3.disable_warnings()
@@ -180,7 +181,7 @@ def get_global_app_id():
 
 def delete_global_app(id):
     status_code, r = api_call(endpoint=endpoint, method="delete", uri=uri_global_apps + id, access_token="")
-    print(f"delete_global_app DELETE status code: {status_code}")
+    print(f"delete_global_app DELETE status code: {status_code}\n")
 
     if status_code == 200:
         return True, r
@@ -194,7 +195,7 @@ def delete_global_app(id):
 # Observe traffic on the BIG-IP: tcpdump -X -nni 0.0 host 10.1.10.200
 def traffic_test(dataset, request_count, send_malicious=True):
     data = ""
-    for i in range(0, 19):
+    for i in range(0, 49):
         data += dataset
     for i in range(0, request_count - 1):
         if i % 2 == 1:
@@ -237,7 +238,16 @@ def main():
     print(f"juice shop ID: {juice_shop_02}\n")
 
     print("Running traffic test to Juice Shop...")
-    traffic_test(json.dumps(juice_shop_02_dec), 100, send_malicious=True)
+    pool = concurrent.futures.ThreadPoolExecutor(max_workers=4)
+    pool.submit(traffic_test, json.dumps(juice_shop_02_dec), 100)
+    pool.submit(traffic_test, json.dumps(juice_shop_02_dec), 100)
+    pool.submit(traffic_test, json.dumps(juice_shop_02_dec), 100)
+    pool.submit(traffic_test, json.dumps(juice_shop_02_dec), 100)
+    # with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
+    #     executor.map(traffic_test, json.dumps(juice_shop_02_dec), 100)
+    pool.shutdown(wait=True)
+
+    # traffic_test(json.dumps(juice_shop_02_dec), 100, send_malicious=True)
 
     input("\nPress enter to delete Juice Shop deployment...\n")
 
