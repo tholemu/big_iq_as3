@@ -8,7 +8,7 @@ USERNAME=yourusername
 PASSWORD=yourpassword
 ```
 
-You may also need to install the `dotenv` library, which is used to store environment variable values outside of the script.
+You may also need to install the `dotenv` library, which is used to manage environment variable values outside of the script.
 
 ```
 pip install python-dotenv
