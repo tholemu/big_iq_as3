@@ -30,7 +30,42 @@ The following process takes place as the script executes:
 1. The deployed application is moved from BIG-IQ's default global application *Unknown Applications* to a unique global app named *Juice_Shop*
 1. A modified declaration, which includes an advanced web application firewall policy, is deployed
 1. A series of traffic tests are run to generate statistics within BIG-IQ
-1. The Juice Shop application service and global app are deleted 
+1. The Juice Shop application service and global app are deleted
+
+
+### WAF Tester Installation / Setup / Usage
+**Install**
+```
+sudo pip install git+https://github.com/aknot242/f5-waf-tester.git
+```
+
+**Setup**
+```
+sudo f5-waf-tester --init
+```
+
+You will be asked a series of questions. Use the following values below; for all other values, leave the default value and simply press Enter:
+
+```
+[BIG-IP] Host []: 10.1.1.4
+[BIG-IP] Username []: admin
+[BIG-IP] Password []: {password}
+ASM Policy Name []: Juice_Shop_WAF_Policy
+Virtual Server URL []: https://10.1.10.11
+Blocking Regular Expression Pattern [<br>Your support ID is: (?P<id>\d+)<br>]:
+Number OF Threads [25]:
+[Filters] Test IDs to include (Separated by ',') []:
+[Filters] Test Systems to include (Separated by ',') []:
+[Filters] Test Attack Types to include (Separated by ',') []:
+[Filters] Test IDs to exclude (Separated by ',') []:
+[Filters] Test Systems to exclude (Separated by ',') []:
+[Filters] Test Attack Types to exclude (Separated by ',') []:
+```
+
+**Run Test**
+```
+sudo f5-waf-tester
+```
 
 ### What is this and why should I care?
 
