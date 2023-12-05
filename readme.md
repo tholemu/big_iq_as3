@@ -14,6 +14,24 @@ You may also need to install the `dotenv` library, which is used to manage envir
 pip install python-dotenv
 ```
 
+### Usage
+
+Ensure you've cloned this repo to the machine used to interact with your BIG-IQ instance and created the `.env` file.
+
+Run the following command:
+
+```
+python_requests_example_workflow.py
+```
+
+The following process takes place as the script executes:
+
+1. Juice Shop AS3 declaration is loaded and deployed
+1. The deployed application is moved from BIG-IQ's default global application *Unknown Applications* to a unique global app named *Juice_Shop*
+1. A modified declaration, which includes an advanced web application firewall policy, is deployed
+1. A series of traffic tests are run to generate statistics within BIG-IQ
+1. The Juice Shop application service and global app are deleted 
+
 ### What is this and why should I care?
 
 This script is simply an introduction on how to leverage Python when interacting with F5 BIG-IQ's APIs, including AS3. It is meant to act as an introduction to working with APIs and gaining an understanding of the basic processes associated with and surrounding **C**reate, **R**ead, **U**pdate, and **D**elete operations, generally referred to as **CRUD**.
